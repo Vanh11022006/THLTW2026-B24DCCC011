@@ -45,7 +45,7 @@ const QuanLySanPham: React.FC = () => {
 
   return (
     <div style={{ padding: '20px' }}>
-      <div style={{ marginBottom: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div style={{ marginBottom: '20px', justifyContent: 'space-between', alignItems: 'center' }}>
         <h1>Quản lý sản phẩm</h1>
         <Button type='primary' size='large' onClick={handleAddProduct}>
           + Thêm sản phẩm
@@ -69,7 +69,8 @@ const QuanLySanPham: React.FC = () => {
           <Form.Item
             label='Tên sản phẩm'
             name='name'
-            rules={[{ required: true, message: 'Vui lòng nhập tên sản phẩm' }]}
+            rules={[{ required: true
+              , message: 'Vui lòng nhập tên sản phẩm' }]}
           >
             <Input placeholder='Nhập tên sản phẩm' />
           </Form.Item>
