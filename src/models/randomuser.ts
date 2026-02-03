@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 export default () => {
 	const [data, setData] = useState([]);
+	
 
 	const getDataUser = async () => {
 		const dataLocal: any = JSON.parse(localStorage.getItem('data') as any);

@@ -1,71 +1,178 @@
-import { Button, Modal, Form, Input, InputNumber } from 'antd';
+import { Button, Modal, Form, Input, InputNumber, Select, message, Tabs, Card, Row, Col, Statistic } from 'antd';
 import { useState } from 'react';
-import type { Product } from '../../models/quanlysanpham/product';
-import useProduct from '../../models/quanlysanpham/product';
+import type { Product } from '../../models/quanlysanpham/types';
+import useProduct from '../../models/quanlysanpham/useProduct';
+import useOrder from '../../models/quanlysanpham/useOrder';
 import ProductTable from './ProductTable';
+import OrderTable from './OrderTable';
+import CreateOrderForm from './CreateOrderForm';
 
 const QuanLySanPham: React.FC = () => {
-  const { addProduct, updateProduct } = useProduct();
-  const [visible, setVisible] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
+  const { products, addProduct, updateProduct } = useProduct();
+  const { orders } = useOrder();
+  const [activeTab, setActiveTab] = useState('products');
+  const [productModalVisible, setProductModalVisible] = useState(false);
+  const [isEditingProduct, setIsEditingProduct] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
-  const [form] = Form.useForm();
+  const [productForm] = Form.useForm();
 
   const handleAddProduct = () => {
-    setIsEdit(false);
+    setIsEditingProduct(false);
     setEditingProduct(null);
-    form.resetFields();
-    setVisible(true);
+    productForm.resetFields();
+    setProductModalVisible(true);
   };
 
-  const handleEdit = (record: Product) => {
-    setIsEdit(true);
+  const handleEditProduct = (record: Product) => {
+    setIsEditingProduct(true);
     setEditingProduct(record);
-    form.setFieldsValue(record);
-    setVisible(true);
+    productForm.setFieldsValue(record);
+    setProductModalVisible(true);
   };
 
-  const handleSubmit = async () => {
+  const handleProductSubmit = async () => {
     try {
-      const values = await form.validateFields();
-      if (isEdit && editingProduct) {
+      const values = await productForm.validateFields();
+      if (isEditingProduct && editingProduct) {
         updateProduct(editingProduct.id, values);
+        message.success('Cập nhật sản phẩm thành công');
       } else {
         addProduct({
           id: Date.now().toString(),
           ...values,
         });
+        message.success('Thêm sản phẩm thành công');
       }
-      setVisible(false);
-      form.resetFields();
+      setProductModalVisible(false);
+      productForm.resetFields();
     } catch (error) {
-      console.log('Validation failed:', error);
+      message.error('Vui lòng điền đầy đủ thông tin');
     }
   };
 
+  const categories = [
+    'Laptop',
+    'Điện thoại',
+    'Máy tính bảng',
+    'Phụ kiện',
+  ];
+
+  // Calculate statistics
+  const totalProducts = products.length;
+  const totalInventoryValue = products.reduce((sum, p) => sum + p.price * p.quantity, 0);
+  const totalOrders = orders.length;
+  const completedOrders = orders.filter(o => o.status === 'Hoàn thành');
+  const totalRevenue = completedOrders.reduce((sum, o) => sum + o.totalAmount, 0);
+
   return (
     <div style={{ padding: '20px' }}>
-      <div style={{ marginBottom: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h1>Quản lý sản phẩm</h1>
-        <Button type='primary' size='large' onClick={handleAddProduct}>
-          + Thêm sản phẩm
-        </Button>
-      </div>
+      {/* Statistics Section */}
+      {activeTab === 'products' && (
+        <Card style={{ marginBottom: '20px' }}>
+          <Row gutter={16}>
+            <Col xs={24} sm={12} md={6}>
+              <Statistic
+                title='Tổng số sản phẩm'
+                value={totalProducts}
+              />
+            </Col>
+            <Col xs={24} sm={12} md={6}>
+              <Statistic
+                title='Tổng giá trị tồn kho'
+                value={totalInventoryValue}
+                prefix='₫'
+                precision={0}
+              />
+            </Col>
+            <Col xs={24} sm={12} md={6}>
+              <Statistic
+                title='Sản phẩm còn hàng'
+                value={products.filter(p => p.quantity > 10).length}
+              />
+            </Col>
+            <Col xs={24} sm={12} md={6}>
+              <Statistic
+                title='Sản phẩm hết hàng'
+                value={products.filter(p => p.quantity === 0).length}
+              />
+            </Col>
+          </Row>
+        </Card>
+      )}
 
-      <ProductTable onEdit={handleEdit} />
+      {activeTab === 'orders' && (
+        <Card style={{ marginBottom: '20px' }}>
+          <Row gutter={16}>
+            <Col xs={24} sm={12} md={6}>
+              <Statistic
+                title='Tổng số đơn hàng'
+                value={totalOrders}
+              />
+            </Col>
+            <Col xs={24} sm={12} md={6}>
+              <Statistic
+                title='Doanh thu'
+                value={totalRevenue}
+                prefix='₫'
+                precision={0}
+              />
+            </Col>
+            <Col xs={24} sm={12} md={6}>
+              <Statistic
+                title='Đơn hàng hoàn thành'
+                value={completedOrders.length}
+              />
+            </Col>
+            <Col xs={24} sm={12} md={6}>
+              <Statistic
+                title='Đơn hàng chờ xử lý'
+                value={orders.filter(o => o.status === 'Chờ xử lý').length}
+              />
+            </Col>
+          </Row>
+        </Card>
+      )}
 
+      {/* Tabs */}
+      <Tabs
+        activeKey={activeTab}
+        onChange={setActiveTab}
+      >
+        <Tabs.TabPane tab='Quản lý Sản phẩm' key='products'>
+          <div>
+            <div style={{ marginBottom: '20px' }}>
+              <Button type='primary' size='large' onClick={handleAddProduct}>
+                + Thêm sản phẩm
+              </Button>
+            </div>
+            <ProductTable onEdit={handleEditProduct} />
+          </div>
+        </Tabs.TabPane>
+        <Tabs.TabPane tab='Quản lý Đơn hàng' key='orders'>
+          <div>
+            <CreateOrderForm />
+            <div style={{ marginTop: '30px' }}>
+              <h2>Danh sách đơn hàng</h2>
+              <OrderTable />
+            </div>
+          </div>
+        </Tabs.TabPane>
+      </Tabs>
+
+      {/* Product Modal */}
       <Modal
-        title={isEdit ? 'Chỉnh sửa sản phẩm' : 'Thêm sản phẩm'}
-        visible={visible}
-        onOk={handleSubmit}
+        title={isEditingProduct ? 'Chỉnh sửa sản phẩm' : 'Thêm sản phẩm'}
+        visible={productModalVisible}
+        onOk={handleProductSubmit}
         onCancel={() => {
-          setVisible(false);
-          form.resetFields();
+          setProductModalVisible(false);
+          productForm.resetFields();
         }}
         okText='Lưu'
         cancelText='Hủy'
+        width={600}
       >
-        <Form form={form} layout='vertical'>
+        <Form form={productForm} layout='vertical'>
           <Form.Item
             label='Tên sản phẩm'
             name='name'
@@ -75,7 +182,21 @@ const QuanLySanPham: React.FC = () => {
           </Form.Item>
 
           <Form.Item
-            label='Giá'
+            label='Danh mục'
+            name='category'
+            rules={[{ required: true, message: 'Vui lòng chọn danh mục' }]}
+          >
+            <Select placeholder='Chọn danh mục'>
+              {categories.map((cat) => (
+                <Select.Option key={cat} value={cat}>
+                  {cat}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+
+          <Form.Item
+            label='Giá (VND)'
             name='price'
             rules={[
               { required: true, message: 'Vui lòng nhập giá' },
@@ -86,7 +207,7 @@ const QuanLySanPham: React.FC = () => {
           </Form.Item>
 
           <Form.Item
-            label='Số lượng'
+            label='Số lượng tồn kho'
             name='quantity'
             rules={[
               { required: true, message: 'Vui lòng nhập số lượng' },
