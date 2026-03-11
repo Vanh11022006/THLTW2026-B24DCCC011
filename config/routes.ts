@@ -70,7 +70,7 @@
     {
         path: '/bai-2-TH2',
         name: 'Quản lý câu hỏi',
-        icon: 'TrophyOutlined',
+        icon: 'ReconciliationOutlined',
         component: './Quanlycauhoi',
     },
 
