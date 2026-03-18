@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Table, Button, Modal, Form, Input, Rate, Space, Tag, Card, Empty } from 'antd';
 import type { Review, Appointment } from './types';
 import type { ColumnsType } from 'antd/es/table';
+import { useAppContext } from './AppContext';
 
 const mockReviews: Review[] = [
   {
@@ -26,39 +27,10 @@ const mockReviews: Review[] = [
   },
 ];
 
-const mockCompletedAppointments: Appointment[] = [
-  {
-    id: 'apt1',
-    customerName: 'Nguyễn Văn B',
-    customerPhone: '0911111111',
-    customerEmail: 'b@example.com',
-    serviceId: 's1',
-    employeeId: 'e1',
-    date: '2026-03-15',
-    startTime: '10:00',
-    endTime: '10:30',
-    status: 'COMPLETED',
-    totalPrice: 100000,
-    createdAt: '2026-03-15',
-  },
-  {
-    id: 'apt2',
-    customerName: 'Trần Thị C',
-    customerPhone: '0922222222',
-    customerEmail: 'c@example.com',
-    serviceId: 's2',
-    employeeId: 'e1',
-    date: '2026-03-14',
-    startTime: '14:00',
-    endTime: '15:00',
-    status: 'COMPLETED',
-    totalPrice: 150000,
-    createdAt: '2026-03-14',
-  },
-];
-
 export const ReviewManagement: React.FC = () => {
+  const { appointments } = useAppContext();
   const [reviews, setReviews] = useState<Review[]>(mockReviews);
+  const completedAppointments = appointments.filter(apt => apt.status === 'COMPLETED');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isReplyModalOpen, setIsReplyModalOpen] = useState(false);
   const [selectedReview, setSelectedReview] = useState<Review | null>(null);
@@ -193,7 +165,7 @@ export const ReviewManagement: React.FC = () => {
       </Card>
 
       <Card title="Lịch hẹn hoàn thành - Cho phép đánh giá">
-        <Table columns={appointmentColumns} dataSource={mockCompletedAppointments} rowKey="id" pagination={false} />
+        <Table columns={appointmentColumns} dataSource={completedAppointments} rowKey="id" pagination={false} />
       </Card>
 
       <Modal
