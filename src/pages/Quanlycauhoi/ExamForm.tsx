@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button, Select, InputNumber, Space, Divider, Row, Col } from 'antd';
+import { Form, Button, Select, InputNumber, Space, Divider, Row, Col, message } from 'antd'; // Đã thêm message
 import { MinusCircleOutlined, PlusOutlined, SaveOutlined } from '@ant-design/icons';
 import { Subject, KnowledgeBlock, Difficulty } from './types';
 
@@ -59,7 +59,7 @@ const ExamForm: React.FC<Props> = ({
           <>
             {fields.map(({ key, name, ...restField }) => (
               <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                <Form.Item {...restField} name={[name, 'kbId']} rules={[{ required: true, message: 'Thiếu' }]}>
+                <Form.Item {...restField} name={[name, 'kbId']} rules={[{ required: true, message: 'Thiếu khối kiến thức' }]}>
                   <Select placeholder="Khối kiến thức" style={{ width: 150 }}>
                     {knowledgeBlocks.map(kb => (
                       <Select.Option key={kb.id} value={kb.id}>{kb.name}</Select.Option>
@@ -67,7 +67,7 @@ const ExamForm: React.FC<Props> = ({
                   </Select>
                 </Form.Item>
 
-                <Form.Item {...restField} name={[name, 'difficulty']} rules={[{ required: true, message: 'Thiếu' }]}>
+                <Form.Item {...restField} name={[name, 'difficulty']} rules={[{ required: true, message: 'Thiếu mức độ' }]}>
                   <Select placeholder="Mức độ" style={{ width: 120 }}>
                     {difficulties.map(d => (
                       <Select.Option key={d} value={d}>{d}</Select.Option>
@@ -75,7 +75,7 @@ const ExamForm: React.FC<Props> = ({
                   </Select>
                 </Form.Item>
 
-                <Form.Item {...restField} name={[name, 'quantity']} rules={[{ required: true, message: 'Thiếu' }]}>
+                <Form.Item {...restField} name={[name, 'quantity']} rules={[{ required: true, message: 'Thiếu số lượng' }]}>
                   <InputNumber min={1} placeholder="Số lượng" />
                 </Form.Item>
 
@@ -97,7 +97,10 @@ const ExamForm: React.FC<Props> = ({
               .then((values: any) => {
                 if(onSaveTemplate) onSaveTemplate(values);
               })
-              .catch((errorInfo: any) => console.log("Lỗi form", errorInfo));
+              .catch((errorInfo: any) => {
+                message.error('Vui lòng điền đầy đủ Môn học và các tiêu chí trước khi lưu!');
+                console.log("Chi tiết lỗi form:", errorInfo);
+              });
           }}
         >
           Lưu thành cấu trúc mẫu

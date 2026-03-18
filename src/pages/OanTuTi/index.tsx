@@ -29,7 +29,6 @@ const handleGuess = () => {
 
     let hint = '';
     const newHistory = [...history];
-
     const userChoice = choices[guessValue - 1];
     const computerRandomIndex = Math.floor(Math.random() * 3);
     const computerRandomChoice = choices[computerRandomIndex];

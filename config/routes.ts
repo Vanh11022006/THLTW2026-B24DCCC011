@@ -75,6 +75,13 @@
     },
 
     {
+        path: '/TH3',
+        name: 'Quản nhân viên và dịch vụ',
+        icon: 'ReconciliationOutlined',
+        component: './QuanlyNhanVien',
+    },
+  
+    {
         path: '/notification',
         routes: [
             {
