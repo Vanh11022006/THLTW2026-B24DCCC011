@@ -80,6 +80,13 @@
         icon: 'ReconciliationOutlined',
         component: './QuanlyNhanVien',
     },
+
+    {
+        path: '/quan-ly-van-bang',
+        name: 'Quản lý Sổ Văn Bằng',
+        icon: 'FileOutlined',
+        component: './QuanLyVanBang',
+    },
   
     {
         path: '/notification',
