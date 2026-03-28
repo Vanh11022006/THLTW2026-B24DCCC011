@@ -47,17 +47,31 @@
     },
    
     {
-        path: '/bai-1',
+        path: '/bai-1-TH1',
         name: 'Bài 1',
         icon: 'PlayCircleOutlined', 
         component: './Gamedoanso/GuessNumberGame', 
     },
     
     {
-        path: '/bai-2',
+        path: '/bai-2-TH1',
         name: 'Bài 2',
         icon: 'BookOutlined', 
         component: './StudyTracker', 
+    },
+    
+    {
+        path: '/bai-1-TH2',
+        name: 'Trò chơi oản tù ti',
+        icon: 'TrophyOutlined',
+        component: './OanTuTi',
+    },
+
+    {
+        path: '/bai-2-TH2',
+        name: 'Quản lý câu hỏi',
+        icon: 'ReconciliationOutlined',
+        component: './Quanlycauhoi',
     },
 
     {
