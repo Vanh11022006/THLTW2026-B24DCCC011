@@ -82,10 +82,17 @@
     },
 
     {
-        path: '/quan-ly-van-bang',
+        path: '/TH4/quan-ly-van-bang',
         name: 'Quản lý Sổ Văn Bằng',
         icon: 'FileOutlined',
         component: './QuanLyVanBang',
+    },
+
+    {
+        path: '/TH5/quan-ly-clb',
+        name: 'Quản Lý CLB',
+        icon: 'TeamOutlined',
+        component: './QuanlyCLB',
     },
   
     {
