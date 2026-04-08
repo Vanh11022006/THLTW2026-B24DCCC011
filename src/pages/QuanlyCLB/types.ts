@@ -53,5 +53,5 @@ export interface IReportStats {
 }
 
 export interface IClubMember extends IApplication {
-  // Inherited from IApplication but only includes Approved members
+ 
 }

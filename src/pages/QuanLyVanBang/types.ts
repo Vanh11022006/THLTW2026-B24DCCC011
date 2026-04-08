@@ -60,6 +60,7 @@ export interface ThongTinVanBang {
   soVanBangId: string; 
   quyetDinhId: string; 
   thongTinPhuLuc: Record<string, any>; 
+  createdAt: string;
   updatedAt: string;
 }
 

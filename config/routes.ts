@@ -94,6 +94,38 @@
         icon: 'TeamOutlined',
         component: './QuanlyCLB',
     },
+
+    {
+        name: 'Kế Hoạch Du Lịch',
+        icon: 'GlobalOutlined',
+        path: '/ke-hoach-du-lich',
+        routes: [
+            {
+                name: 'Khám phá điểm đến',
+                path: '/ke-hoach-du-lich/kham-pha',
+                component: './KeHoachDuLich/KhamPha',
+            },
+      
+            {
+        
+                name: 'Lịch trình của tôi',
+                path: '/ke-hoach-du-lich/lich-trinh',
+                component: './KeHoachDuLich/LichTrinh',
+            },
+      
+            {
+                name: 'Quản lý điểm đến (Admin)',
+                path: '/ke-hoach-du-lich/admin/diem-den',
+                component: './KeHoachDuLich/Admin/QuanLyDiemDen',
+      
+            },
+            {
+                name: 'Thống kê (Admin)',
+                path: '/ke-hoach-du-lich/admin/thong-ke',
+                component: './KeHoachDuLich/Admin/ThongKe',
+      },
+    ],
+  },
   
     {
         path: '/notification',

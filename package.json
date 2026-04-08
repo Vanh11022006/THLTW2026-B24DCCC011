@@ -52,8 +52,10 @@
     "not ie <= 10"
   ],
   "dependencies": {
+    "@ant-design/charts": "^2.6.7",
     "@ant-design/compatible": "^5.1.4",
     "@ant-design/icons": "~4.5.0",
+    "@ant-design/pro-components": "^2.8.10",
     "@ant-design/pro-layout": "~6.15.3",
     "@monaco-editor/react": "^4.6.0",
     "@sentry/react": "^7.65.0",
