@@ -66,7 +66,6 @@ const QuanLyPhongHoc: React.FC = () => {
     return Promise.resolve();
   };
 
-  // Xử lý tìm kiếm
   const handleSearch = () => {
     const values = searchForm.getFieldsValue();
     setSearchParams({
@@ -78,14 +77,12 @@ const QuanLyPhongHoc: React.FC = () => {
     message.success('Tìm kiếm thành công!');
   };
 
-  // Làm lại tìm kiếm
   const handleResetSearch = () => {
     searchForm.resetFields();
     setSearchParams({});
     message.info('Đã reset tiêu chí tìm kiếm');
   };
 
-  // Lọc dữ liệu theo tìm kiếm
   const filteredData = useMemo(() => {
     return dataSource.filter(item => {
       if (searchParams.maPhong && !item.maPhong.toLowerCase().includes(searchParams.maPhong.toLowerCase())) {
@@ -104,7 +101,6 @@ const QuanLyPhongHoc: React.FC = () => {
     });
   }, [dataSource, searchParams]);
 
-  // Tính toán thống kê
   const statistics = useMemo(() => {
     const total = dataSource.length;
     const lyThuyet = dataSource.filter(item => item.loaiPhong === 'Lý thuyết').length;
@@ -114,7 +110,6 @@ const QuanLyPhongHoc: React.FC = () => {
     return { total, lyThuyet, thucHanh, hoiTruong, tongChoNgoi };
   }, [dataSource]);
 
-  // Render badge cho loại phòng
   const renderLoaiPhongBadge = (loaiPhong: string) => {
     const badgeColors: { [key: string]: string } = {
       'Lý thuyết': 'blue',
@@ -124,7 +119,6 @@ const QuanLyPhongHoc: React.FC = () => {
     return <Badge color={badgeColors[loaiPhong]} text={loaiPhong} />;
   };
 
-  // Render trạng thái chỗ ngồi
   const renderChoNgoi = (soChoNgoi: number) => {
     let status: 'success' | 'processing' | 'default' = 'default';
     let label = 'Lớn';
@@ -371,15 +365,7 @@ const QuanLyPhongHoc: React.FC = () => {
           rowKey="id"
           pagination={{ pageSize: 10, showSizeChanger: true }}
           search={false}
-          options={false}
           toolBarRender={() => [
-            <Button
-              key="export"
-              icon={<DownloadOutlined />}
-              onClick={handleExportCsv}
-            >
-              Xuất CSV
-            </Button>,
             <Button
               key="button"
               icon={<PlusOutlined />}
