@@ -94,6 +94,7 @@
         icon: 'TeamOutlined',
         component: './QuanlyCLB',
     },
+    
 
     {
         name: 'Kế Hoạch Du Lịch',
@@ -126,6 +127,13 @@
       },
     ],
   },
+
+    {
+        path: '/KTGK/quan-ly-phong-hoc',
+        name: 'Quản Lý phòng học',
+        icon: 'TeamOutlined',
+        component: './QuanLyPhongHoc',
+    },
   
     {
         path: '/notification',
