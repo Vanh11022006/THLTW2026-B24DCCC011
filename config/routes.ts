@@ -126,7 +126,8 @@
                 component: './KeHoachDuLich/Admin/ThongKe',
       },
     ],
-  },
+
+    },
 
     {
         path: '/KTGK/quan-ly-phong-hoc',
@@ -134,29 +135,76 @@
         icon: 'TeamOutlined',
         component: './QuanLyPhongHoc',
     },
-  
+
     {
-        path: '/notification',
+        name: 'Khám phá Blog',
+        icon: 'ReadOutlined',
+        path: '/blog',
         routes: [
             {
-                path: './subscribe',
-                exact: true,
-                component: './ThongBao/Subscribe',
+                name: 'Trang chủ',
+                path: '/blog/trang-chu',
+                component: './Blog/TrangChu',
             },
+
             {
-                path: './check',
-                exact: true,
-                component: './ThongBao/Check',
+                name: 'Giới thiệu',
+                path: '/blog/gioi-thieu',
+                component: './Blog/GioiThieu',
             },
-            {
-                path: './',
-                exact: true,
-                component: './ThongBao/NotifOneSignal',
-            },
-        ],
-        layout: false,
-        hideInMenu: true,
+
+      {
+        name: 'Chi tiết bài viết',
+        path: '/blog/bai-viet/:slug', 
+        component: './Blog/ChiTietBaiViet',
+        hideInMenu: true, 
+      },
+    ],
     },
+    {
+        name: 'Quản trị Blog',
+        icon: 'FormOutlined', 
+        path: '/admin-blog',
+
+    routes: [
+        {
+            name: 'Quản lý bài viết',
+            path: '/admin-blog/bai-viet',
+            component: './AdminBlog/QuanLyBaiViet',
+        },
+
+        {
+            name: 'Quản lý thẻ (Tags)',
+            path: '/admin-blog/the',
+            component: './AdminBlog/QuanLyThe',
+        },
+        
+        ],
+
+        },
+  
+        {
+            path: '/notification',
+            routes: [
+                {
+                    path: './subscribe',
+                    exact: true,
+                    component: './ThongBao/Subscribe',
+                },
+                {
+                    path: './check',
+                    exact: true,
+                    component: './ThongBao/Check',
+                },
+                {
+                    path: './',
+                    exact: true,
+                    component: './ThongBao/NotifOneSignal',
+                },
+            ],
+            layout: false,
+            hideInMenu: true,
+        },
     {
         path: '/',
     },
