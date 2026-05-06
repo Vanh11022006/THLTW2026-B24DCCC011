@@ -178,11 +178,37 @@
             path: '/admin-blog/the',
             component: './AdminBlog/QuanLyThe',
         },
-        
-        ],
-
-        },
+    ]
   
+    },
+
+    {
+        
+            name: 'Quản lý Công việc',
+            icon: 'ProjectOutlined',
+            path: '/task-manager',
+            
+            routes: [
+                {
+                    name: 'Dashboard',
+                    path: '/task-manager/dashboard',
+                    component: './TaskManager/Dashboard',
+                },
+
+                {
+                    name: 'Kanban Board',
+                    path: '/task-manager/kanban',
+                    component: './TaskManager/KanbanBoard',
+                },
+
+                {
+                    name: 'Danh sách Task',
+                    path: '/task-manager/danh-sach',
+                    component: './TaskManager/DanhSachTask',
+                },
+            ],
+        },
+          
         {
             path: '/notification',
             routes: [
