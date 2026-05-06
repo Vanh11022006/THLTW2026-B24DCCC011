@@ -183,6 +183,39 @@
     },
 
     {
+        name: 'Fitness & Health',
+        icon: 'HeartOutlined',
+        path: '/fitness-app',
+        routes: [
+            {
+                name: 'Dashboard',
+                path: '/fitness-app/dashboard',
+                component: './FitnessApp/Dashboard',
+            },
+            {
+                name: 'Nhật ký Tập luyện',
+                path: '/fitness-app/tap-luyen',
+                component: './FitnessApp/NhatKyTapLuyen',
+            },
+            {
+                name: 'Chỉ số Sức khỏe',
+                path: '/fitness-app/chi-so',
+                component: './FitnessApp/ChiSoSucKhoe',
+            },
+            {
+                name: 'Quản lý Mục tiêu',
+                path: '/fitness-app/muc-tieu',
+                component: './FitnessApp/QuanLyMucTieu',
+            },
+            {
+                name: 'Thư viện Bài tập',
+                path: '/fitness-app/thu-vien',
+                component: './FitnessApp/ThuVienBaiTap',
+            },
+        ],
+    },
+
+    {
         
             name: 'Quản lý Công việc',
             icon: 'ProjectOutlined',
